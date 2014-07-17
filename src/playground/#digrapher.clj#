@@ -2,38 +2,21 @@
   (:use [dorothy.core]))
 
 (defn digrapher [edge-lists]
-  (-> edge-lists
-      (into [])
-      (digraph)
-      dot
-      (save! "out.png" {:format :png})))
-
-(def letters [:a :b :c :d :e])
-
-(comment  ; program flow
-  (digrapher [[:bucket :purchase-stats]
-              [:purchases-by-bucket :purchase-stats]
-              [:sessions-by-bucket :managed-sessions-by-bucket]
-              [:sessions-by-bucket :unmanaged-sessions-by-bucket]
-              [:managed-sessions-by-bucket :managed-session-stats]
-              [:bucket :managed-session-stats]
-              [:unmanaged-sessions-by-bucket :unmanaged-session-stats]
-              [:bucket :unmanaged-session-stats]
-              [:purchase-stats :sales-$]
-              [:purchase-stats :discounts-$]
-              [:purchase-stats :num-purchases]
-              [:managed-session-stats :num-sessions]
-              [:unmanaged-session-stats :num-unmanaged]
-              [:sales-$ :aov]
-              [:num-purchases :aov]
-              [:num-purchases :conversion]
-              [:num-sessions :conversion]
-              [:discounts-$ :discounts-%]
-              [:sales-$ :discount-$]
-              [:bucket :type]
-              [:bucket :name]])
+  (->
+   (digraph edge-lists)
+   dot
+   (save! "out.png" {:format :png})))
 
 
+(defmacro dbg [body] `(let [x# ~body] (println "dbg:" '~body "=" x#) x#))
+
+(defn many-into-one [many one]
+  (digrapher (dbg (for [m many] [m one]))))
+
+(many-into-one [:sarah ] :lemonaide-sale)
+
+
+(comment 
   (digrapher [[:session-added-to-partition? {:shape :diamond}]
               [:session-present? {:shape :diamond}]
               [:device-present? {:shape :diamond}]
@@ -66,4 +49,5 @@
                :add-session-to-partition
                {:label :no}]
               [:create-device :create-session :partition-present?]
-              [:device-present? :create-session {:label :yes}]]))
+              [:device-present? :create-session {:label :yes}]])
+  )

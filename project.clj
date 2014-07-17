@@ -3,5 +3,8 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.5.1"]
-                 [dorothy "0.0.5"]])
+  :dependencies [[org.clojure/clojure            "1.5.1"]
+                 [enlive                         "1.1.5"]
+                 [hiccup                         "1.0.5"]
+                 [org.clojure/math.combinatorics "0.0.7"]
+                 [dorothy                        "0.0.5"]])
