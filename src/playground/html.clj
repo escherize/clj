@@ -2,7 +2,8 @@
   (:require [hiccup.core :as h]
             [hiccup.page :as p]
             [clojure.math.combinatorics :as combo]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [print.foo :refer :all]))
 
 (defonce table
   (->> "/usr/share/dict/words"
@@ -51,6 +52,7 @@
 (defn words-of-length [n]
   (filter #(= n (count %)) dict))
 
+
 (defn made-of [word lp]
   (every? identity
           (for [[char n] (frequencies word)]
@@ -70,6 +72,13 @@
        (merge-with + lp)
        (into {})))
 
+(defn possible-words [len lp]
+  (->> len
+       words-of-length
+       (filter #(made-of % lp))
+       sort
+       (map (fn [word] [word (remove-from-lp lp word)]))))
+
 (defn lp+len->words+lp
   ([lp len]
      (lp+len->words+lp lp len []))
@@ -82,22 +91,19 @@
   (for [[words lp] words+lps]
     (lp+len->words+lp lp next-len words)))
 
-#_(defn foo [in]
-    (let [lens (map count in)
-          wp   (frequencies (apply str in))]
-      (loop [p        wp
-             sentance []
-             length   0]
-        (if (= length lens)
-          (prn sentance)
-          (for [word (words-of-length (get lens length))]
-            (if (made-of word p)
-              (foo (remove-from-lp p word) (conj sentance word) (inc length))
-              (foo (add-to-lp p word) (pop sentance) (dec length))))))))
-
+(defn foo [in]
+  (print-let [lens (map count in)
+              wp   (frequencies (apply str in))]
+             (doseq [[w1 wp1] (possible-words (nth lens 0) wp)]
+               (doseq [[w2 wp2] (possible-words (nth lens 1) wp1)]
+                 (doseq [[w3 wp3] (possible-words (nth lens 2) wp2)]
+                   (when (empty wp3) 
+                     (println (str w1 " " w2 " " w3))))))))
 
 (comment
-  (def in ["this" "is" "a" "name"])
+  (def in ["steven" "taylor" "deobald"])
+  (def in ["thaly" "alizee" "rouge"])
   (foo in)
   )
+
 

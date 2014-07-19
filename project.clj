@@ -7,5 +7,6 @@
                  [enlive                         "1.1.5"]
                  [hiccup                         "1.0.5"]
                  [org.clojure/math.combinatorics "0.0.7"]
-                 [dorothy                        "0.0.5"]]
-  :plugins [[cider/cider-nrepl "0.7.0-SNAPSHOT"]])
+                 [dorothy                        "0.0.5"]
+                 [print-foo                      "0.5.3"]]
+  :plugins [[weavejester/cider-nrepl "0.7.0-SNAPSHOT"]])
