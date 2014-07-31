@@ -35,8 +35,6 @@
             [:session-end           :start                       {:label 50} ]
             [:session-end           :halt                        {:label 50} ]])
 
-
-
 (comment  ; program flow
   (digrapher [[:bucket :purchase-stats]
               [:purchases-by-bucket :purchase-stats]
