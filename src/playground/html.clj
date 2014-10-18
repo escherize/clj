@@ -50,7 +50,7 @@
          (p/include-css "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css")
          (web-page word))))
 
-(informative-web-page "orange")
+(informative-web-page "castle")
 
 (def words-of-length 
   (memoize 
@@ -92,12 +92,17 @@
         (doseq [[w3 wp3] (possible-words (nth lens 2) wp2)]
           (when (empty wp3) 
             (println (str w1 " " w2 " " w3))))))))
+
 (comment
   (anagram-names ["sarah" "ying" "arnegard"])
   (anagram-names ["steven" "taylor" "deobald"])
   (anagram-names ["thaly" "alizee" "rouge"])
   (anagram-names ["paul" "allen" "richardson"])
   (anagram-names ["bryan" "christopher" "maass"])
+  (anagram-names ["ming" "xiao"])
   )
+
+
+
 
 

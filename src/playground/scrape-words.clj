@@ -20,3 +20,13 @@
 
 
   )
+
+(defn words []
+  (clojure.string/split-lines
+   (slurp "/usr/share/dict/words")))
+
+(def valid-word-set
+  (->> (words)
+       set))
+
+(time (map valid-word-set ))
